@@ -1,18 +1,10 @@
-Here's a clean and structured `README.md` for your GitHub repo titled `LeetCode_DSA: My LeetCode Journey`:
+ 🚀 LeetCode_DSA
+My LeetCode Journey** – A personal repository to track, organize, and improve my DSA skills, with the goal of cracking top tech interviews like Google, Amazon, etc.
 
----
 
-```markdown
-# 🚀 LeetCode_DSA
-**My LeetCode Journey** – A personal repository to track, organize, and improve my DSA skills, with the goal of cracking top tech interviews like Google, Amazon, etc.
-
----
-
-## 📂 Folder Structure
+📂 Folder Structure
 
 Each folder represents a DSA topic and contains Java solutions with problem links and explanations in comments.
-
-```
 
 LeetCode\_DSA/
 ├── Arrays/
@@ -26,11 +18,8 @@ LeetCode\_DSA/
 ├── Backtracking/
 └── README.md
 
-````
 
----
-
-## 📌 Problem Format
+📌 Problem Format
 
 Each solution file includes:
 - Problem name
@@ -38,7 +27,6 @@ Each solution file includes:
 - Java code with clean logic
 - Edge cases if applicable
 
-```java
 // LeetCode 121 - Best Time to Buy and Sell Stock
 // https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
 class Solution {
@@ -46,11 +34,8 @@ class Solution {
         ...
     }
 }
-````
 
----
-
-## 📈 My Progress
+📈 My Progress
 
 | Topic               | Status         |
 | ------------------- | -------------- |
@@ -66,37 +51,27 @@ class Solution {
 | Backtracking        | ✅ Completed    |
 | Dynamic Programming | 🔄 In Progress |
 
----
 
-## 👨‍🏫 Mentor Notes
 
-This repo is shared with my mentor for feedback and guidance. Each file and commit helps track my learning progress.
 
----
-
-## 🛠️ Tech Stack
+🛠️ Tech Stack
 
 * Language: Java
 * Platform: LeetCode
 * Version Control: Git + GitHub
 * IDE: VS Code / IntelliJ
 
----
 
-## 🔗 Connect
+🔗 Connect
 
 * 📬 [LinkedIn](https://www.linkedin.com/)
 * 🧠 [Striver A2Z Sheet](https://takeuforward.org/interviews/strivers-sde-sheet-top-coding-interview-problems/)
 * 📚 [NeetCode 150](https://neetcode.io/)
 * 📹 YouTube: Striver | Aditya Verma | NeetCode
 
----
 
 > “Consistency over intensity. One problem a day keeps regret away.”
 
-```
-
----
 
 Let me know if you want badges, progress bars, or an auto-updating script!
-```
+
