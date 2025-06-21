@@ -71,7 +71,3 @@ class Solution {
 
 
 > “Consistency over intensity. One problem a day keeps regret away.”
-
-
-Let me know if you want badges, progress bars, or an auto-updating script!
-
