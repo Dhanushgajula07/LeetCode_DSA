@@ -33,5 +33,8 @@ class Solution {
             node = node.next;
         }
         return dummy.next;
+
+        // tc = O(n) + O(n)
+        // sc = O(n) + O(n) dummy node
     }
 }
