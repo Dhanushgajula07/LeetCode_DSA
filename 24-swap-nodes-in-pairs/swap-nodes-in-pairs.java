@@ -88,6 +88,7 @@
 class Solution {
     public ListNode swapPairs(ListNode head) {
         // base case: no pair to swap
+        // best aprt is that thinking recusrively will solve the work
         if (head == null || head.next == null) return head;
 
         ListNode first = head;
