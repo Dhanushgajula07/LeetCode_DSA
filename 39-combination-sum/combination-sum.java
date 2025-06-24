@@ -1,4 +1,7 @@
 class Solution {
+    // mistakes 
+    // 1. deep copy
+    // 2. store i and alsi add i not index
     public List<List<Integer>> combinationSum(int[] arr, int target) {
     // so its of type 2 of recursion/
     // type 2
