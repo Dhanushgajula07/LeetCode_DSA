@@ -58,6 +58,39 @@
 
 
 
+// class Solution {
+//     public int minDistance(String s1, String s2) {
+//         // so here is my choice diagram 
+//         // if matches then no problem
+//         // else i can MIN(insert, delete, replace)
+//         // base case is also good
+//         int m = s1.length();
+//         int n =s2.length();
+//         int[][] dp = new int[m+1][n+1];
+
+//           // Base cases
+//         for (int i = 0; i <= m; i++) dp[i][0] = i; // delete all characters from s1
+//         for (int j = 0; j <= n; j++) dp[0][j] = j; // insert all characters to s1
+
+//         for(int i =1;i<=m;i++){
+//             for(int j =1;j<=n;j++){
+//         if(s1.charAt(i-1) == s2.charAt(j-1)){
+//             // matched 
+//              dp[i][j] = dp[i-1][j-1];
+//         }
+//         else{
+//               dp[i][j] = 1 + Math.min(
+//                 dp[i][j-1], Math.min(dp[i-1][j],dp[i-1][j-1]));
+//         }
+//             }
+//         }
+//             return dp[m][n];
+//     }
+// }
+
+
+// now just 2 1d arrays
+
 class Solution {
     public int minDistance(String s1, String s2) {
         // so here is my choice diagram 
@@ -66,24 +99,28 @@ class Solution {
         // base case is also good
         int m = s1.length();
         int n =s2.length();
-        int[][] dp = new int[m+1][n+1];
+        int[] prev = new int[n+1]; // size is no of col's
 
           // Base cases
-        for (int i = 0; i <= m; i++) dp[i][0] = i; // delete all characters from s1
-        for (int j = 0; j <= n; j++) dp[0][j] = j; // insert all characters to s1
-
+           for (int j = 0; j <= n; j++) {
+            prev[j] = j;
+        }
         for(int i =1;i<=m;i++){
+            
+            int[] curr = new int[n+1]; // size is no of col's
+            curr[0] = i;
             for(int j =1;j<=n;j++){
         if(s1.charAt(i-1) == s2.charAt(j-1)){
             // matched 
-             dp[i][j] = dp[i-1][j-1];
+             curr[j] = prev[j-1];
         }
         else{
-              dp[i][j] = 1 + Math.min(
-                dp[i][j-1], Math.min(dp[i-1][j],dp[i-1][j-1]));
+              curr[j] = 1 + Math.min(
+                curr[j-1], Math.min(prev[j],prev[j-1]));
         }
             }
+            prev = curr;
         }
-            return dp[m][n];
+            return prev[n];
     }
 }
