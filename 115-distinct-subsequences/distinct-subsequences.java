@@ -67,6 +67,50 @@
 
 // so im just using i-1 and i so i just need 2 1d array
 
+// class Solution {
+//     public int numDistinct(String s, String t) {
+//         // so its like i have choice of pick or no pick if the char mnatches
+//         // else i have no choice but to try thr next char
+//         // this is my choice diagram     
+//         int m = s.length();
+//         int n = t.length();
+//         int[] prev = new int[n+1];
+
+//         // base case
+//         // if (j<0) return 1
+//         // mean when j string is "" it can be for sure formned by picking none
+
+//         // for(int j=0;j<m;j++){
+//         //     dp[j][0] = 1;
+//         // }
+//         prev[0] = 1;
+//         /// dp[i-v][..] -> prev[]
+//         // no of states =.no of looops
+//         for (int i = 1; i <= m; i++) {
+//             int[] curr = new int[n+1];
+//             // dont miss ihis
+//             curr[0] = 1;
+//             for (int j = 1; j <= n; j++) {
+//                 if (s.charAt(i - 1) == t.charAt(j - 1)) {
+//                     // i have choice either take it or try for other occurance
+//                     int pick = prev[j - 1];
+//                     int nopick = prev[j];
+//                     curr[j] = pick + nopick;
+//                 } else {
+//                     curr[j] = prev[j];
+//                 }
+//             }
+//             prev = curr;
+//         }
+
+//         return prev[n];
+//     }
+// }
+
+
+// one 1d dp
+
+
 class Solution {
     public int numDistinct(String s, String t) {
         // so its like i have choice of pick or no pick if the char mnatches
@@ -87,20 +131,19 @@ class Solution {
         /// dp[i-v][..] -> prev[]
         // no of states =.no of looops
         for (int i = 1; i <= m; i++) {
-            int[] curr = new int[n+1];
-            // dont miss ihis
-            curr[0] = 1;
-            for (int j = 1; j <= n; j++) {
+            // so 1d dp works only when we run from right to left
+            for (int j = n; j >=1 ; j--) {
                 if (s.charAt(i - 1) == t.charAt(j - 1)) {
                     // i have choice either take it or try for other occurance
                     int pick = prev[j - 1];
                     int nopick = prev[j];
-                    curr[j] = pick + nopick;
-                } else {
-                    curr[j] = prev[j];
-                }
+                    prev[j] = pick + nopick;
+                } 
+                // same no use
+                // else {
+                //     prev[j] = prev[j];
+                // }
             }
-            prev = curr;
         }
 
         return prev[n];
