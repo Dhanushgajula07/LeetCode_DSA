@@ -32,7 +32,6 @@
 //     }
 // }
 
-
 class Solution {
     public boolean isMatch(String s, String p) {
         // my choice diagram is that
@@ -40,36 +39,31 @@ class Solution {
         // else * then for loop 0 <-- j
         int m = s.length();
         int n = p.length();
-        Boolean[][] dp = new Boolean[m][n];
-        return solve(m-1,n-1, s, p,dp);
-    }
+        boolean[][] dp = new boolean[m + 1][n + 1];
 
-    public boolean solve(int i, int j, String s, String p,Boolean[][] dp) {
-        if (i < 0 && j < 0)
-            return true;
+        // now tricky part is to convert this to table
+        // Empty string vs empty pattern = match
+        dp[0][0] = true;
 
-        if (i < 0 && j >= 0) {
-            for (int ii = 0; ii <= j; ii++) {
-                if (p.charAt(ii) != '*')
-                    return false;
-            }
-            return true;
-        }
-
-        if (j < 0 && i >= 0)
-            return false;
-            
-        if(dp[i][j] != null) return dp[i][j];
-        // 
-        if (i >= 0 && j >= 0) {
-            if (p.charAt(j) == s.charAt(i) || p.charAt(j) == '?') {
-                // matched
-                return  dp[i][j] = solve(i - 1, j - 1, s, p,dp);
-            } else if (p.charAt(j) == '*') {
-                // if p is *
-                return dp[i][j] = solve(i - 1, j, s, p,dp) || solve(i, j - 1, s, p,dp);
+        // First row (s is empty) vs pattern
+        for (int j = 1; j <= n; j++) {
+            if (p.charAt(j - 1) == '*') {
+                dp[0][j] = dp[0][j - 1];
+            } else {
+                dp[0][j] = false;
             }
         }
-        return false;
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (p.charAt(j-1) == s.charAt(i-1) || p.charAt(j-1) == '?') {
+                    // matched
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else if (p.charAt(j-1) == '*') {
+                    // if p is *
+                    dp[i][j] = dp[i - 1][j] || dp[i][j - 1];
+                }
+            }
+        }
+        return dp[m][n];
     }
 }
