@@ -1,13 +1,15 @@
 class Solution {
     public int longestStrChain(String[] arr) {
         // so basically its LIS but here while chgecking > i should write a extra methos fior comparing the Strings
+        // catchy pints are base case and skipped boolean
         int n = arr.length;
         int[] dp = new int[n];
 
         // fill with 1 because singel is also valid
         Arrays.fill(dp, 1);
-
-        Arrays.sort(arr, Comparator.comparingInt(String::length));
+        // their is catch we should sort to have correct answers
+        // else we will get wrong answer
+         Arrays.sort(arr,(a,b)->a.length()-b.length());
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < i; j++) {
