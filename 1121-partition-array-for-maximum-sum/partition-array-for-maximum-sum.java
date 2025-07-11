@@ -29,29 +29,26 @@
 //     }
 // }
 
-
 class Solution {
     public int maxSumAfterPartitioning(int[] arr, int k) {
         int n = arr.length;
-        Integer[] dp = new Integer[n]; // memoization array
-        return solve(0, arr, k, dp);
-    }
+        int[] dp = new int[n + 1];  // dp[i] = max sum from index i to end
 
-    public int solve(int i, int[] arr, int k, Integer[] dp) {
-        if (i == arr.length) return 0;
-        if (dp[i] != null) return dp[i];
+        for (int i = n - 1; i >= 0; i--) {
+            int maxVal = 0;
+            int maxSum = 0;
 
-        int maxVal = 0;
-        int maxSum = 0;
+            // Try all partitions of length 1 to k from index i
+            for (int j = i; j < Math.min(i + k, n); j++) {
+                maxVal = Math.max(maxVal, arr[j]);
+                int length = j - i + 1;
+                int sum = maxVal * length + dp[j + 1];
+                maxSum = Math.max(maxSum, sum);
+            }
 
-        // Try all partitions from i to i + k - 1 (but within bounds)
-        for (int j = i; j < Math.min(i + k, arr.length); j++) {
-            maxVal = Math.max(maxVal, arr[j]);
-            int length = j - i + 1;
-            int sum = maxVal * length + solve(j + 1, arr, k, dp);
-            maxSum = Math.max(maxSum, sum);
+            dp[i] = maxSum;
         }
 
-        return dp[i] = maxSum;
+        return dp[0];
     }
 }
