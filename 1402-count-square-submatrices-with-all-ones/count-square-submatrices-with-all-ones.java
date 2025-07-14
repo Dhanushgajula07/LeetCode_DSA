@@ -2,6 +2,14 @@ class Solution {
     public int countSquares(int[][] matrix) {
         // its quite simple and straight forward
         // we create an dp[][] and initialise and then build the table
+
+        // approach is that we check min of all 3 sides left,top,diagolnal and get min of all 3
+        // why it works?
+        // because when you do min then it cancels out the rectangles
+        // how ?
+        // because if its not square that mean thiir will be 0 so min is always 0
+
+        
         int m = matrix.length;
         int n = matrix[0].length;
         int[][] dp = new int[m][n];
