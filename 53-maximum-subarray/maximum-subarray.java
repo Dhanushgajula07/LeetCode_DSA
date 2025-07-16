@@ -1,11 +1,17 @@
 class Solution {
     public int maxSubArray(int[] nums) {
-        int maxSum = nums[0];
-        int sum = nums[0];
+        // intution is that if at any point sum is < 0 the 0 is bigger right soi make my answer as 0
+        int maxSum = Integer.MIN_VALUE;
+        int sum = 0;
         int n = nums.length;
-        for(int i = 1;i<n;i++){
-            sum = Math.max(sum + nums[i],nums[i]);
-            maxSum = Math.max(maxSum,sum);
+
+        for(int i=0;i<n;i++){
+            sum += nums[i];
+             maxSum = Math.max(sum,maxSum);
+            if(sum < 0){
+                sum = 0;
+            }
+           
         }
         return maxSum;
     }
