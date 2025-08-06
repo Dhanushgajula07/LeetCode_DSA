@@ -1,73 +1,70 @@
 class Solution {
     public int strStr(String main, String pattern) {
-        // so its a string matching algorithm
-        /// brute force is O(m.n)
-        // we will optimise it by KMP
+        //so its the string matchging technique that can be aolved uisng 3 algorithms:
+        // 1. kmp
+        // 2. erbin karp
+        // 3. z algorithm
+        // lets go one by one
 
-        // kmp has 2 main methods :
-        // 1. find the pi array
-        // 2. now use it and find the index
+        // 1. KMP
+        // we need to creeate the lps -> longest prefix suffix aray on patter then use that to compute fall back and do the work that can be done on O(m * n) in O(m + n) time
 
-        // pi array
-        int[] pi = piarray(pattern);
-        int ans = -1;
-        // now you got pi and 2 strings now do matching
+        // get the lps
+        int[] lps = getLPS(pattern);
 
-        int i= 0;
+        // now lets use that to get the 1st occurabnce
+        int i = 0;
         int j = 0;
-        int m = pattern.length();
         int n = main.length();
-
-        while(i<n){
-            // if matched
-            if(main.charAt(i) == pattern.charAt(j)){
-                // now matched so just i++ and j++
-                i++;
-                j++;
-            }
-
-            if(j == m){
-                // answer found;
-                ans = i - j;
-               break;
-            }
-            else if(i<n && main.charAt(i) != pattern.charAt(j)){
-                if(j != 0){
-                    j = pi[j-1];
-                }
-                else{
-                    i++;
-                }
-            }
-        }
-
-        return ans;
-    }
-    public int[] piarray(String pattern){
-        int [] pi = new int[pattern.length()];
-        int j=0;
-        int i =1;
         int m = pattern.length();
-        while(i<m){
-            // chekc same?
-            if(pattern.charAt(i) == pattern.charAt(j)){
-                // matched so just fill pi with j + 1
-                j++;
-                pi[i] = j;
+
+        while (i < n) {
+            if (main.charAt(i) == pattern.charAt(j)) {
                 i++;
+                j++;
             }
-            else{
-                // now go back but how many ?
-                // exactly the length of the pref == suff
-                if(j != 0){
-                    j = pi[j-1];
-                }
-                else{
-                    pi[j] = 0;
+
+            // match found
+            if (j == m) {
+                return i - m ;
+                // j = lps[j-1]; // refresh found check others
+            } else if (i < n && main.charAt(i) != pattern.charAt(j)) {
+                // try to fall back
+                if (j != 0) {
+                    j = lps[j - 1];
+                } else {
                     i++;
                 }
             }
         }
-        return pi;
+        return -1;
+    }
+
+    public int[] getLPS(String pattern) {
+        int m = pattern.length();
+        int[] lps = new int[m];
+        lps[0] = 0;
+
+        int i = 1;
+        int len = 0;
+        while (i < m) {
+            // case 1: matched
+            if (pattern.charAt(i) == pattern.charAt(len)) {
+                len++;
+                lps[i] = len;
+                i++;
+            }
+            // case 2: not matched
+            else {
+                if (len != 0) { // len is capable for fall back
+                    len = lps[len - 1];
+                } else {
+                    // not possible to fall back
+                    lps[i] = 0;
+                    i++;
+                }
+            }
+        }
+        return lps;
     }
 }
