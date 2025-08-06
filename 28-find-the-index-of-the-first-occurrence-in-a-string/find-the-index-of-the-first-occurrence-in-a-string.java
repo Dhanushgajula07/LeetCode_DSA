@@ -72,54 +72,107 @@
 // 2. now lets use the rabin karp
 // which uses the polynominal hashing function and rolling hashing techniques
 
+// class Solution {
+//     public int strStr(String main, String pattern) {
+//         int mod = 101;
+//         int base = 256;
+
+//         int totalhash = 1;
+//         int patternhash = 0;
+//         int mainhash = 0;
+
+//         int m = pattern.length();
+//         int n = main.length();
+
+//         // edge case: if pattern is longer than text
+//         if (m > n)
+//             return -1;
+
+//         // phase: 1
+//         // compute the total hash till m-1
+//         for (int i = 0; i < m - 1; i++) {
+//             totalhash = (base * totalhash) % mod;
+//         }
+
+//         // phase : 2
+//         for (int i = 0; i < m; i++) {
+//             patternhash = (patternhash * base + (int) pattern.charAt(i)) % mod;
+//             mainhash = (mainhash * base + (int) main.charAt(i)) % mod;
+//         }
+
+//         // phase 3:
+//         // rolling hashing and ans finding
+//         for (int i = 0; i <= n - m; i++) { // Only go till n - m to avoid out-of-bounds error
+//             if (patternhash == mainhash) {
+//                 if (main.substring(i, i + m).equals(pattern)) {
+//                     return i;
+//                 }
+//             }
+
+//             if (i < n - m) {
+//                 // now rolling
+//                 mainhash = (base * ((mainhash - ((int) main.charAt(i) * totalhash) % mod + mod) % mod)
+//                         + (int) main.charAt(i + m)) % mod;
+
+//                 // Handle negative result after modulo
+//                 if (mainhash < 0) {
+//                     mainhash += mod;
+//                 }
+//             }
+//         }
+//         return -1;
+//     }
+// }
+
+// in the previous algontheir was a bit change in the approach of the find the rolling hash
+
+//3. now we will solve the z-function
+// its the one thatr hold me back untill i watched yt video and understood
+
+// we build a z tabkle of the combined string
 class Solution {
     public int strStr(String main, String pattern) {
-        int mod = 101;
-        int base = 256;
+        if (pattern.isEmpty()) return 0;
+        if (main.isEmpty()) return -1;
 
-        int totalhash = 1;
-        int patternhash = 0;
-        int mainhash = 0;
-
+        String combined = pattern + '$' + main;
+        int[] z = getZtable(combined);
         int m = pattern.length();
-        int n = main.length();
-
-        // edge case: if pattern is longer than text
-        if (m > n)
-            return -1;
-
-        // phase: 1
-        // compute the total hash till m-1
-        for (int i = 0; i < m - 1; i++) {
-            totalhash = (base * totalhash) % mod;
-        }
-
-        // phase : 2
-        for (int i = 0; i < m; i++) {
-            patternhash = (patternhash * base + (int) pattern.charAt(i)) % mod;
-            mainhash = (mainhash * base + (int) main.charAt(i)) % mod;
-        }
-
-        // phase 3:
-        // rolling hashing and ans finding
-        for (int i = 0; i <= n - m; i++) { // Only go till n - m to avoid out-of-bounds error
-            if (patternhash == mainhash) {
-                if (main.substring(i, i + m).equals(pattern)) {
-                    return i;
-                }
-            }
-
-            if (i < n - m) {
-                // now rolling
-                mainhash = (base * ((mainhash - ((int) main.charAt(i) * totalhash) % mod + mod) % mod)
-                        + (int) main.charAt(i + m)) % mod;
-
-                // Handle negative result after modulo
-                if (mainhash < 0) {
-                    mainhash += mod;
-                }
+        int n = z.length;
+        for (int i = m + 1; i < n; i++) {
+            if (z[i] == m) {
+                return i - m - 1;
             }
         }
         return -1;
+    }
+
+    public int[] getZtable(String text) {
+        int n = text.length();
+        int[] z = new int[n];
+        int l = 0, r = 0;
+        for (int i = 1; i < n; i++) {
+            if (i > r) {
+                l = r = i;
+                while (r < n && text.charAt(r - l) == text.charAt(r)) {
+                    r++;
+                }
+                z[i] = r - l;
+                r--;
+            } else {
+                int k = i - l;
+                if (z[k] < r - i + 1) {
+                    z[i] = z[k];
+                } else {
+                    l = i;
+                    while (r < n && text.charAt(r - l) == text.charAt(r)) {
+                        r++;
+                    }
+                    z[i] = r - l;
+                    r--;
+                }
+            }
+        }
+        return z;
     }
 }
