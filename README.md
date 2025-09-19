@@ -47,9 +47,9 @@ class Solution {
 | Greedy              | ✅ Completed    |
 | Heaps               | ✅ Completed    |
 | Stack & Queues      | ✅ Completed    |
-| Bit Manipulation    | 🔄 In Progress |
+| Bit Manipulation    | ✅ Completed    |
 | Backtracking        | ✅ Completed    |
-| Dynamic Programming | 🔄 In Progress |
+| Dynamic Programming | ✅ Completed    |
 
 
 
