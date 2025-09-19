@@ -64,7 +64,7 @@ class Solution {
 
 🔗 Connect
 
-* 📬 [LinkedIn](https://www.linkedin.com/)
+* 📬 [LinkedIn](https://www.linkedin.com/in/dhanushgajula/)
 * 🧠 [Striver A2Z Sheet](https://takeuforward.org/interviews/strivers-sde-sheet-top-coding-interview-problems/)
 * 📚 [NeetCode 150](https://neetcode.io/)
 * 📹 YouTube: Striver | Aditya Verma | NeetCode
