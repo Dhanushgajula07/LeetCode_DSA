@@ -1,85 +1,29 @@
-// // import java.util.*;
-
-// // class Solution {
-// //     public List<List<Integer>> subsetsWithDup(int[] nums) {
-// //         Arrays.sort(nums);  // Important: sort to group duplicates
-// //         List<List<Integer>> ans = new ArrayList<>();
-// //         generate(0, nums, new ArrayList<>(), ans);
-// //         return ans;
-// //     }
-
-// //     private void generate(int index, int[] nums, List<Integer> current, List<List<Integer>> ans) {
-// //         ans.add(new ArrayList<>(current));
-
-// //         for (int i = index; i < nums.length; i++) {
-
-// //             // Skip duplicates (only on the same recursive level)
-// //             if (i > index && nums[i] == nums[i - 1]) continue;
-
-// //             current.add(nums[i]);
-// //             generate(i + 1, nums, current, ans);  // move to next index
-// //             current.remove(current.size() - 1);
-// //         }
-// //     }
-// // }
-
-
-
-
-// import java.util.*;
-
-// class Solution {
-//     public List<List<Integer>> subsetsWithDup(int[] nums) {
-//         Arrays.sort(nums);  // Group duplicates
-//         List<List<Integer>> ans = new ArrayList<>();
-//         backtrack(0, nums, new ArrayList<>(), ans);
-//         return ans;
-//     }
-
-//     private void backtrack(int index, int[] nums, List<Integer> current, List<List<Integer>> ans) {
-//         if (index == nums.length) {
-//             ans.add(new ArrayList<>(current));
-//             return;
-//         }
-
-//         // 1️⃣ Pick current element
-//         current.add(nums[index]);
-//         backtrack(index + 1, nums, current, ans);
-//         current.remove(current.size() - 1); // Backtrack
-
-//         // 2️⃣ Skip current and all duplicates of current
-//         while (index + 1 < nums.length && nums[index] == nums[index + 1]) {
-//             index++;
-//         }
-//         backtrack(index + 1, nums, current, ans);
-//     }
-// }
-
-
-
-
-import java.util.*;
-
 class Solution {
-    public List<List<Integer>> subsetsWithDup(int[] nums) {
-        Arrays.sort(nums); // Optional: helps produce consistent order
-        Set<List<Integer>> set = new HashSet<>();
-        generate(0, nums, new ArrayList<>(), set);
-        return new ArrayList<>(set);
+    public List<List<Integer>> subsetsWithDup(int[] arr) {
+        List<List<Integer>> ans  = new ArrayList<>();
+        // since it sould not have any duplicate that means i should somehow remove the repeating elemnt so
+        // sort and compare the previous elmemnt
+        Arrays.sort(arr);
+        generate(arr,0,new ArrayList<>(),ans);
+        return ans;
     }
+    public void generate(int[] arr,int idx,ArrayList<Integer> current,List<List<Integer>> ans){
+        // base case
+        
+            ans.add(new ArrayList<>(current));
+       
 
-    private void generate(int index, int[] nums, List<Integer> current, Set<List<Integer>> set) {
-        if (index == nums.length) {
-            set.add(new ArrayList<>(current)); // HashSet removes duplicates
-            return;
-        }
+        // pick call remove call but no duplicates
+        // so i will use the for loop based recursion and just check some condition
+        for(int i = idx;i<arr.length;i++){
 
-        // Pick
-        current.add(nums[index]);
-        generate(index + 1, nums, current, set);
+            // check
+            if(i > idx && arr[i] == arr[i-1])
+            continue;
 
-        // Not Pick
-        current.remove(current.size() - 1);
-        generate(index + 1, nums, current, set);
+            current.add(arr[i]);
+            generate(arr,i + 1,current,ans);
+            current.remove(current.size() -1);
+        } 
     }
 }
