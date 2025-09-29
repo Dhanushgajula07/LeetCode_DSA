@@ -1,71 +1,87 @@
-
 class Solution {
     public List<List<String>> solveNQueens(int n) {
+        // 1st i will get my n X n board
+        char[][] board = boardCreater(n);
+
+        // 2. we will creata an aswers
         List<List<String>> ans = new ArrayList<>();
-        char[][] board = new char[n][n];
+        
+        //3. lets call solve metod for finding all possiblities
+        solve(0,n,board,ans);
 
-        for (char[] row : board) {
-            Arrays.fill(row, '.');
-        }
-        // its of type 2
-        // at each col i have all the rows
-        // yes i will fill collm wise because i can check only left and other left 2 corners
-        // i need a method to check valid
-        // and then method to convert board to List of string list
-
-        dfs(ans,board,0);
         return ans;
     }
-    public void dfs(List<List<String>> ans,char[][] board,int col){
+    public char[][] boardCreater(int n){
+        // this method will return me a n* n checs board filled with .'s'
+
+        char[][] board = new char[n][n];
+
+        for(char[] row : board){
+            Arrays.fill(row,'.');
+        }
+        return board;
+    }
+    // 2. solve
+    public void solve(int col,int n,char[][] board,List<List<String>> ans){
         // base case
-        if(col == board[0].length ){
-            List<String> con = convert(board);
-            ans.add(con);
+        if(col == n){
+            // reached end by putting all th equesns
+            List<String> converted= convetBoard(board);
+            ans.add(converted);
             return;
         }
 
-        // multiple choices and decsions
-        for(int row =0;row<board.length;row++){
-            if(check(board,row,col )){
-                // pick call remove
+        // now lets actually solve it its imsple buut efective
+        // for each col go thoru all the rows
+        for(int row = 0;row < n;row++){
+            // check if you can put their or noi
+            boolean canPut = canPut(board,row,col,n);
+            if(canPut){
+                // pick
                 board[row][col] = 'Q';
-                dfs(ans,board,col + 1);
+                solve(col+1,n,board,ans);
+                // remove
                 board[row][col] = '.';
             }
         }
     }
-    public boolean check(char[][] board, int i, int j) {
-    // check complete left
-    int jj = j;
-    while (jj >= 0) {
-        if (board[i][jj] == 'Q') return false;
-        jj--;
-    }
 
-    // check left top
-    int ii = i, jj2 = j;
-    while (ii >= 0 && jj2 >= 0) {
-        if (board[ii][jj2] == 'Q') return false;
-        ii--;
-        jj2--;
-    }
-
-    // check left bottom
-    int ii2 = i, jj3 = j;
-    while (ii2 < board.length && jj3 >= 0) {
-        if (board[ii2][jj3] == 'Q') return false;
-        ii2++;
-        jj3--;
-    }
-
-    return true;
-}
-    public List<String> convert (char[][] board){
-        List<String> ans = new ArrayList<>();
-
+    public List<String> convetBoard(char[][] board){
+        List<String> converted  = new ArrayList<>();
         for(char[] row : board){
-            ans.add(new String(row));
+            converted.add(new String(row));
         }
-        return ans;
-    } 
+        return converted;
+    }
+    public boolean canPut(char[][] board, int row ,int col,int n){
+    // ✅ FIX: Instead of returning true when filled, return false if any 'Q' is found
+
+        // ✅ FIX: Don't mutate original row & col. Use temp variables
+        int c = col - 1;
+        // check left in the same row
+        while (c >= 0) {
+            if (board[row][c] == 'Q') return false; // ✅ FIX: return false if queen found
+            c--;
+        }
+
+        // ✅ FIX: reset row & col for upper-left diagonal
+        int r = row - 1;
+        c = col - 1;
+        while (r >= 0 && c >= 0) {
+            if (board[r][c] == 'Q') return false; // ✅ FIX
+            r--;
+            c--;
+        }
+
+        // ✅ FIX: reset for lower-left diagonal
+        r = row + 1;
+        c = col - 1;
+        while (r < n && c >= 0) {
+            if (board[r][c] == 'Q') return false; // ✅ FIX
+            r++;
+            c--;
+        }
+
+        return true; // ✅ FIX: return true if it's safe
+    }
 }
