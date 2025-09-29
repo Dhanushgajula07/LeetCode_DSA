@@ -20,6 +20,7 @@ class Solution {
         for (int i = 1; i <= 9; i++) {
             if (isPossible(board, row, col, i, m, n)) {
                 board[row][col] = (char) (i + '0');
+                // early pruning
                 if (solve(nextRow, nextCol, board, m, n)) {
                     return true;
                 }
