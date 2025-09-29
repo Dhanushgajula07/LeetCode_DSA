@@ -1,64 +1,30 @@
 class Solution {
-    public List<List<Integer>> permute(int[] arr) {
+    public List<List<Integer>> permute(int[] nums) {
+        // so basically it has only one solution that is trying out all tye possible permutationsso its backtracking
+        // and TC: n! and  SC : n!
         List<List<Integer>> ans = new ArrayList<>();
-        // its permutation so alays from 0 index
-        int n = arr.length;
-        boolean[] visited = new boolean[n];
-        dfs(arr,ans,new ArrayList<>(),visited);
+        int[] used = new int[nums.length];
+        Arrays.fill(used,-1);
+        solve(nums,0,new ArrayList<>(),ans,used);
         return ans;
     }
-    public void dfs(int[] arr,List<List<Integer>> ans,ArrayList<Integer> list,boolean[] used){
-        if(list.size() == arr.length){
-            ans.add(new ArrayList<>(list)); // deeo copy
+    private void solve(int[] arr,int idx,ArrayList<Integer> current, List<List<Integer>> ans,int[] used){
+        // base case
+        if(current.size() == arr.length){
+            // i can add and rerturn
+            ans.add(new ArrayList<>(current));
             return;
         }
 
+        // now the actual game
         for(int i = 0;i<arr.length;i++){
-            if(!used[i]){
-                // pick call remove
-
-                list.add(arr[i]);
-                used[i] = true; // mark used from that path
-                dfs(arr,ans,list,used);
-                used[i] = false;
-                list.remove(list.size() - 1);
+            if(used[i] != 0){
+                used[i] = 0;
+                current.add(arr[i]);
+                solve(arr,i + 1,current, ans,used);
+                current.remove(current.size() -1);
+                used[i] = -1;
             }
         }
     }
 }
-
-
-
-// class Solution {
-//     public List<List<Integer>> permute(int[] arr) {
-//         List<List<Integer>> ans = new ArrayList<>();
-//         generate(0, arr, ans);
-//         return ans;
-//     }
-
-//     private void generate(int index, int[] arr, List<List<Integer>> ans) {
-//         // base case
-//         if (index == arr.length) {
-//             List<Integer> permutation = new ArrayList<>();
-//             for (int num : arr) {
-//                 permutation.add(num);
-//             }
-//             ans.add(permutation);
-//             return;
-//         }
-
-//         for (int i = index; i < arr.length; i++) {
-//             // swap to fix an element at index
-//             swap(arr, i, index);
-//             generate(index + 1, arr, ans);
-//             // backtrack
-//             swap(arr, i, index);
-//         }
-//     }
-
-//     private void swap(int[] arr, int i, int j) {
-//         int temp = arr[i];
-//         arr[i] = arr[j];
-//         arr[j] = temp;
-//     }
-// }
