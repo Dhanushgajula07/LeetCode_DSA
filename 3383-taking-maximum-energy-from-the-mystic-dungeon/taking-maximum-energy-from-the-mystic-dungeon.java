@@ -1,65 +1,68 @@
-// class Solution {
-//     public int maximumEnergy(int[] energy, int k) {
-//         int n = energy.length;
-//         int maxEnergy = Integer.MIN_VALUE;
-
-//         for (int i = 0; i < n; i++) {
-//             int val = dfs(energy, i, k);
-//             maxEnergy = Math.max(maxEnergy, val);
-//         }
-
-//         return maxEnergy;
-//     }
-
-//     private int dfs(int[] arr, int i, int k) {
-//         if (i >= arr.length) return 0;
-//         return arr[i] + dfs(arr, i + k, k);
-//     }
-// }
-
-
-
-// class Solution {
-//     public int maximumEnergy(int[] energy, int k) {
-//         int n = energy.length;
-//         Integer[] dp = new Integer[n];  // memo array
-//         int maxEnergy = Integer.MIN_VALUE;
-
-//         for (int i = 0; i < n; i++) {
-//             int val = dfs(energy, i, k, dp);
-//             maxEnergy = Math.max(maxEnergy, val);
-//         }
-
-//         return maxEnergy;
-//     }
-
-//     private int dfs(int[] arr, int i, int k, Integer[] dp) {
-//         if (i >= arr.length) return 0;
-//         if (dp[i] != null) return dp[i];
-
-//         dp[i] = arr[i] + dfs(arr, i + k, k, dp);
-//         return dp[i];
-//     }
-// }
-
-// tabulation
-
 class Solution {
+    // public int maximumEnergy(int[] energy, int k) {
+    //     // so lets start with brute -> recursion -> memo -> tabulation -> space optimisation
+    //     // its multi entry point
+    //     int max = Integer.MIN_VALUE;
+
+    //     int n = energy.length;
+    //     for(int i = 0;i<n;i++){
+    //         // start at every point
+    //         int sum = 0;
+    //         int j = i;
+    //         while(j < n){
+    //             sum += energy[j];
+    //             j = j + k;
+    //         }
+    //         max = Math.max(max,sum);
+    //     }
+
+    //     return max;
+    // }
+
+    // now lets try to convert to recursion
+    // public int maximumEnergy(int[] energy, int k) {
+    //     // recursion approach
+    //     int max = Integer.MIN_VALUE;
+    //     for(int i = 0;i<energy.length;i++){
+    //         int sum  = solve(energy,i,k);
+    //         max = Math.max(max,sum);
+    //     }
+    //     return max;
+    // }
+    // public int solve(int[] arr,int idx,int k){
+    //     // base case
+    //     if(idx >= arr.length){
+    //         return 0;
+    //     }
+
+    //     return arr[idx] + solve(arr, idx + k,k);
+    // }
+
     public int maximumEnergy(int[] energy, int k) {
-        int n = energy.length;
-        int[] dp = new int[n];
-        int maxEnergy = Integer.MIN_VALUE;
+        // now lets convery recursion to memoisation
+        // and remember its left to right
+        int max = Integer.MIN_VALUE;
+        int [] dp = new int[energy.length];
+        Arrays.fill(dp,-1);
 
-        // Fill from right to left
-        for (int i = n - 1; i >= 0; i--) {
-            if (i + k < n)
-                dp[i] = energy[i] + dp[i + k];
-            else
-                dp[i] = energy[i];
+        for (int i = 0; i < energy.length; i++) {
+            int sum = solve(energy, i, k,dp);
+            max = Math.max(max, sum);
+        }
+        return max;
+    }
 
-            maxEnergy = Math.max(maxEnergy, dp[i]);
+    public int solve(int[] arr, int idx, int k,int[] dp) {
+        // base case
+        if (idx >= arr.length) {
+            return 0;
+        }
+        // base case 2
+        if(dp[idx] != -1){
+            return dp[idx];
         }
 
-        return maxEnergy;
+        dp[idx] = arr[idx] + solve(arr,idx + k,k,dp);
+        return dp[ idx];
     }
 }
