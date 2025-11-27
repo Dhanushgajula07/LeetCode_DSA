@@ -1,25 +1,28 @@
 class Solution {
     public int maxArea(int[] height) {
-        // use only 2 poiners
-        // left and right
+        // brute force is O(n^2)
+        // so i need O(n)
         int l = 0;
-        int r = height.length - 1 ;
+        int n = height.length;
+        int r = n-1;
 
-        int ans = 0;
-
+        int max = Integer.MIN_VALUE;
         while(l<r){
-            int dis = r - l ;
-
-            if(height[l] < height[r]){
-                ans = Math.max(ans,dis * height[l]);
+            int left = height[l];
+            int right = height[r];
+            int dist = r - l;
+            if(left <= right){
+                int ans = dist * left;
+                max = Math.max(max,ans);
                 l++;
             }
             else{
-                ans = Math.max(ans, dis * height[r]);
+                int ans = dist * right;
+                max = Math.max(max,ans);
                 r--;
             }
         }
 
-        return ans;
+        return max;
     }
 }
