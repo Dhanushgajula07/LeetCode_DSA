@@ -1,61 +1,21 @@
 class Solution {
     public int largestRectangleArea(int[] heights) {
-        // so ist NSL and NSR
-        // and get the right - left -1 = len
-        // wid = len * arr[i]
-        ArrayList<Integer> NSL = getNSL(heights);
-        ArrayList<Integer> NSR = getNSR(heights);
+        // now lets solve it using single stack
+        // MAH
+        Stack<Integer> st = new Stack<>();
         int n = heights.length;
-        int[] length = new int[n];
-        for(int i = 0;i<n;i++){
-            length[i] = NSR.get(i) - NSL.get(i) - 1;
-        }
-
-        // ans
-        int ans = Integer.MIN_VALUE;
-
-        for(int i = 0;i<n;i++){
-            int val = length[i];
-            int area = val * heights[i];
-            ans = Math.max(ans,area);
+        int ans = 0;
+        for(int i = 0;i<=n;i++){
+            int currHeight = (i == n) ? 0 : heights[i];
+            while(!st.isEmpty() && heights[st.peek()]  >= currHeight){
+                // mean i need to remove and down is nsl and curr is nsr
+                int currIdx = st.pop();
+                int val = st.isEmpty() ? i : i - st.peek() - 1;// -1 already done
+                ans = Math.max(ans,val * heights[currIdx]);
+            }
+            st.push(i);
         }
 
         return ans;
     }
-    private  ArrayList<Integer> getNSL(int[] arr){
-        ArrayList<Integer> list = new ArrayList<>();
-        Stack<int[]> st = new Stack<>();
-        for(int i =0;i<arr.length;i++){
-            while(!st.isEmpty() && st.peek()[0] >= arr[i]){
-                st.pop();
-            }
-            if(st.isEmpty()){
-                list.add(-1); // -1 fro LEFT
-            }
-            else{
-                list.add(st.peek()[1]);
-            }
-            st.push(new int[] { arr[i],i});
-        }
-        return list;
-    }
-    private ArrayList<Integer> getNSR(int[] arr){
-        ArrayList<Integer> list = new ArrayList<>();
-        Stack<int[]> st = new Stack<>();
-        for(int i =arr.length - 1;i >= 0;i--){
-
-            while(!st.isEmpty() && st.peek()[0] >= arr[i]){
-                st.pop();
-            }
-            if(st.isEmpty()){
-                list.add(arr.length); // -1 fro LEFT
-            }
-            else{
-                list.add(st.peek()[1]);
-            }
-            st.push(new int[] { arr[i],i});
-        }
-        Collections.reverse(list);
-        return list;
-    }  
 }
