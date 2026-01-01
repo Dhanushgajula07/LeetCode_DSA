@@ -18,7 +18,8 @@
 //                 sum -= nums[l];
 //                 l++;
 //             }
-//             cnt += (r - l + 1);
+//             // since its atmost that mean sum <= shoud be counted
+//             cnt += (r - l + 1); // no of sub arrays between r and l 
 //         }
 //         return cnt;
 //     }
@@ -28,19 +29,20 @@
 
 class Solution {
     public int subarraySum(int[] nums, int k) {
+    // so its the pref sum pattern why?
+    // becuase if i know if sum - k exist then i can know how many times sum == k exist
     HashMap<Integer,Integer> map = new HashMap<>();
-    map.put(0,1);
-    int n = nums.length;
+    map.put(0,1); // sum 0 1 time at index 0 because its count
     int count = 0;
     int sum = 0;
-    for(int i=0;i<n;i++){
-        sum += nums[i];
+    for(int num : nums){
+        sum += num;
         if(map.containsKey(sum - k)){
+            // then their exsist sum == k
             count += map.get(sum - k);
         }
         map.put(sum,map.getOrDefault(sum,0) + 1);
     }
-
     return count;
     }
 }
