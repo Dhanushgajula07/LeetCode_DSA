@@ -9,6 +9,8 @@ class Solution {
         for(int num : nums){
             sum += num;
             int rem = sum % k;
+            // need to handle negative remainders by converting them to positive using:
+
             if(rem < 0) rem = (rem + k) % k;
             if(map.containsKey(rem)){
                 // that is sum % k == 0
