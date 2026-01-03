@@ -14,7 +14,7 @@
         // and next ABC patter 2 ways (yrg)(gry) because up we already have ryr
 
         // what if 1st row is ABC (ryg) then
-        // next we have 2 ABA (ygy)(grg)
+        // next we have 2 ABA (ygy)(yry)
         // next we have 2 abc (ygr)(gry)
 
 
