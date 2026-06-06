@@ -1,6 +1,6 @@
 class Solution {
     public List<Integer> majorityElement(int[] nums) {
-        // we cna use th trick that is voting rules
+        // we can use th trick that is voting rules
         int n = nums.length;
         List<Integer> ans = new ArrayList<>();
 
@@ -23,7 +23,7 @@ class Solution {
 
         int cnt1 = 0;
         int cnt2 = 0;
-
+        // their can be onlt 2 numbers that are more than n//3 times
         for (int i = 0; i < nums.length; i++) {
             if (nums[i] == num1) {
                 cnt1++;
