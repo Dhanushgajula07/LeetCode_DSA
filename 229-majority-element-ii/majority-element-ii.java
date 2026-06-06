@@ -25,17 +25,17 @@ class Solution {
         int cnt2 = 0;
         // their can be onlt 2 numbers that are more than n//3 times
         for (int i = 0; i < nums.length; i++) {
-            if (nums[i] == num1) {
+            if (nums[i] == num1) { // it martches one number
                 cnt1++;
-            } else if (nums[i] == num2) {
+            } else if (nums[i] == num2) { // it matches another number
                 cnt2++;
-            } else if (cnt1 == 0) {
+            } else if (cnt1 == 0) { // it matches with none and also cnt is 0
                 num1 = nums[i];
                 cnt1 = 1;
-            } else if (cnt2 == 0) {
+            } else if (cnt2 == 0) { // it matches with none and also cnt is 0
                 num2 = nums[i];
                 cnt2 = 1;
-            } else {
+            } else { // no match and also its not 0
                 cnt1--;
                 cnt2--;
             }
