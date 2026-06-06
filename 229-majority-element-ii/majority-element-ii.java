@@ -42,6 +42,8 @@ class Solution {
 
         }
 
+        // its not garent that its the answer so cross chekc again
+        
         cnt1 = 0;
         cnt2 = 0;
         for (int num : nums) {
