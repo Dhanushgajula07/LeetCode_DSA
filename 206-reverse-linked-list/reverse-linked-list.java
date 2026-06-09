@@ -53,19 +53,27 @@
 // 2. recursive
 class Solution {
     public ListNode reverseList(ListNode head) {
-    if(head == null || head.next == null){
-        // if null or only 1 that is the reverse
-        return head;
+        if(head == null || head.next == null){
+            return head;
+        }
+        // now if we want to solve it using recursion 
+        // we will use IBH method
+        return reverse(head);
     }
-    // IBH
-    // i will do for last node you do rest
-    ListNode reversed = reverseList(head.next);
+    public ListNode reverse(ListNode head){
+        if(head == null || head.next == null){
+            return head;
+        }
 
-    // last nodes linking
-    ListNode future = head.next;
-    future.next = head;
-    head.next = null;
+        // IBH
+        // base done
+        // hypo now
+        ListNode reversed = reverse(head.next);
+        ListNode next = head.next;
+        next.next = head;
+        head.next = null;
+        
+        return reversed;
 
-    return reversed;
     }
 }
