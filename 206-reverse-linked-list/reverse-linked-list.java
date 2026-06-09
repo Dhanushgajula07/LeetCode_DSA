@@ -8,20 +8,64 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+
+// class Solution {
+//     public ListNode reverseList(ListNode head) {
+//         Stack<Integer> st = new Stack<>();
+//          ListNode curr = head;
+//          while(curr != null){
+//             st.push(curr.val);
+//             curr = curr.next;
+//          }
+//          curr = head;
+
+
+//          while(curr != null){
+//             curr.val = st.pop();
+//             curr = curr.next;
+//          }
+//          return head;
+//     }
+// }
+
+
+// // 1. iterative
+// class Solution {
+//     public ListNode reverseList(ListNode head) {
+//     if(head == null || head.next == null){
+//         // if null or only 1 that is the reverse
+//         return head;
+//     }
+
+//     ListNode curr = head;
+//     ListNode prev = null;
+//     while(curr != null){
+//         ListNode future = curr.next;
+//         curr.next = prev;
+//         prev = curr;
+//         curr = future;
+//     }
+//     return prev;
+//     }
+// }
+
+
+// 2. recursive
 class Solution {
     public ListNode reverseList(ListNode head) {
-        return reverse(head);
+    if(head == null || head.next == null){
+        // if null or only 1 that is the reverse
+        return head;
     }
-    public ListNode reverse(ListNode head){
-        if(head == null || head.next == null){
-            return head;
-        }
-        // call the methid to get new node as new head
-        ListNode new_head = reverse(head.next);
-        // now linking
-        ListNode next = head.next;
-        next.next = head;
-        head.next = null;
-        return new_head;
+    // IBH
+    // i will do for last node you do rest
+    ListNode reversed = reverseList(head.next);
+
+    // last nodes linking
+    ListNode future = head.next;
+    future.next = head;
+    head.next = null;
+
+    return reversed;
     }
 }
