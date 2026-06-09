@@ -69,10 +69,13 @@ class Solution {
         // base done
         // hypo now
         ListNode reversed = reverse(head.next);
+        // the previoius line is to just get the last node 
+
+        // but before that in should reverse the links right-- just visuallise
         ListNode next = head.next;
         next.next = head;
         head.next = null;
-        
+
         return reversed;
 
     }
