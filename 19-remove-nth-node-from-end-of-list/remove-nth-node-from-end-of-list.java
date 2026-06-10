@@ -57,11 +57,14 @@ class Solution {
         fast = fast.next;
     }
     ListNode slow = head;
+
+    // base case is important
     if(fast == null) return head.next;
     while(fast.next != null){
         fast = fast.next;
         slow = slow.next;
     }
+    
     slow.next = slow.next.next;
 
     return head;
