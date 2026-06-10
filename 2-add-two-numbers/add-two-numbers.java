@@ -19,6 +19,8 @@ class Solution {
             ListNode temp = new ListNode(sum % 10);
             curr.next = temp;
             curr = temp;
+
+            // now we get the carry to next
             carry = sum / 10;
         } 
         return dummy.next;
